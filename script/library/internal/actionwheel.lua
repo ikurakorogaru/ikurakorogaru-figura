@@ -122,13 +122,6 @@ function aw.newNumAction(topage, to, name, item, default, r, g, b, lighten)
 		updateTitle()
 	end)
 
-	open:setOnScroll(function(dir)
-		local v = aw.getnum("actionNums", to) + dir
-		pings.changeNums(to, v)
-		aw.setnum("actionNums", to, v)
-		updateTitle()
-	end)
-
 	open:setItem(item)
 	aw.setActionColor(open, r, g, b, lighten)
 	topage:setAction(-1, open)
