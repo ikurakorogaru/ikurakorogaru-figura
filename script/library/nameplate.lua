@@ -1,5 +1,3 @@
--- TODO: 完成/バグ修正
--- set/add nameがバグってる
 local np = {}
 local nums = {}
 nums.nowname = {
@@ -45,17 +43,41 @@ function np.addname(t, plateType, pos)
 	if t ~= nil then
 		if plateType == nil then
 			for k, v in pairs(nums.nowname) do
-				if pos == true then nameplate[k]:setText(v .. t) end
-				if pos == false then nameplate[k]:setText(t .. v) end
+				local newName = v
+
+				if pos == false then
+					newName = t .. v
+				else
+					newName = v .. t
+				end
+
+				nameplate[k]:setText(newName)
+				nums.nowname[k] = newName
 			end
 		else
-			if pos == true then nameplate[plateType]:setText(nums.nowname[plateType] .. t) end
-			if pos == false then nameplate[plateType]:setText(t .. nums.nowname[plateType]) end
+			local v = nums.nowname[plateType]
+			local newName = v
+
+			if pos == false then
+				newName = t .. v
+			else
+				newName = v .. t
+			end
+
+			nameplate[plateType]:setText(newName)
+			nums.nowname[plateType] = newName
 		end
 	end
-	nums.nowname[plateType] = t
 end
 
-function np.nowname(type)
-
+function np.nowname(plateType)
+	if plateType ~= nil then
+		if nums.nowname[plateType] ~= nil then
+			return nums.nowname[plateType]
+		else
+			return nil
+		end
+	else
+		return nums.nowname
+	end
 end
