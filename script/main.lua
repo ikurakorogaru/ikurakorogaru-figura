@@ -29,7 +29,6 @@ aw.openPage = Managers.actionwheel.openPage
 -- eyesequence --
 local es = {}
 es.newSequence = Managers.eyesequence.newSequence
-es.tick = Managers.eyesequence.tick
 
 local function reloadActions(openpage)
 	aw.setnum("actions", nil, {})
@@ -351,12 +350,7 @@ function events.SKULL_RENDER(delta, block, item, entity, mode)
 	end
 end
 
-local function ticks(nt)
-	es.tick(nt)
-end
-
 function events.tick()
-	ticks(t)
 	-- afk --
 	if aw.getnum("actionToggles", "afk") then
 		at = at + 1

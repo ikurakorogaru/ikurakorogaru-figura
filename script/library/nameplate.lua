@@ -1,3 +1,5 @@
+-- TODO: 完成/バグ修正
+-- set/add nameがバグってる
 local np = {}
 local nums = {}
 nums.nowname = {

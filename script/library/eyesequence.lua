@@ -1,5 +1,6 @@
 local es = {}
 local nums = {}
+local t = 0
 
 function es.getnum(g, k)
 	if k ~= nil then
@@ -49,8 +50,9 @@ function es.blinkSequence(t)
 	end
 end
 
-function es.tick(t)
+function events.tick()
 	es.blinkSequence(t)
-end 
+	t = t + 1
+end
 
 return es
