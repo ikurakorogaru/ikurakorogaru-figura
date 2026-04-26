@@ -1,3 +1,5 @@
+local st = 0
+local skullSpeed = 0.5
 local headParts_s = { models.model.Skull.Head1, models.model.Skull.Head2, models.model.Skull.Head3,
 	models.model.Skull.Head4, models.model.Skull.eye_up_s, models.model.Skull.eye_down_s }
 function events.SKULL_RENDER(delta, block, item, entity, mode)
@@ -7,5 +9,15 @@ function events.SKULL_RENDER(delta, block, item, entity, mode)
 		else
 			part:setOffsetRot(0, 0, 0)
 		end
+	end
+end
+
+function events.TICK()
+	st = st + skullSpeed
+end
+
+function pings.changeSkullSpeed(n)
+	if type(n) == "number" then
+		skullSpeed = n
 	end
 end
