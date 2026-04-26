@@ -16,7 +16,7 @@ function events.chat_send_message(msg)
 				pings.changeName(string.sub(args[3], 1, 64))
 			end
 			if args[2] == "reset" then
-				pings.changeName(player:getName())
+				pings.changeName("")
 			end
 		end
 		-- skull --

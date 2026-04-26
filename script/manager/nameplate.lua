@@ -4,8 +4,14 @@ local np = {}
 np.setname = manager.nameplate.setname
 np.addname = manager.nameplate.addname
 np.nowname = manager.nameplate.nowname
+local t = 0
 local at = 0
 local name = {}
+local textname = ""
+
+function pings.changeName(iname)
+	textname = iname
+end
 
 local function hsvToHex(h, s, v)
 	local r, g, b
@@ -32,38 +38,34 @@ local function hsvToHex(h, s, v)
 		r, g, b = v, p, q
 	end
 
-	-- RGBを0-255に変換して16進数文字列にする
 	return string.format("#%02X%02X%02X", math.floor(r * 255), math.floor(g * 255), math.floor(b * 255))
 end
 
 -- name.rainbow --
-local function rainbowName(defaultCol, rainbowColorInversion, text)
+local function rainbowName(text, rainbowColorInversion, move)
 	local nameText = {}
-	if getnum("actionToggles", "namerainbow") then
-		for i = 1, #text do
-			local col
-			local myText = string.sub(text, i, i)
-			if getnum("actionToggles", "namerainbowmove") then
-				if rainbowColorInversion then
-					col = hsvToHex((((i + 0 - t / 10) + 0.5) % 1) / #text, 0.5, 1)
-				else
-					col = hsvToHex((i + 0 - t / 10) / #text, 0.5, 1)
-				end
+	for i = 1, #text do
+		local col
+		local myText = string.sub(text, i, i)
+		if move then
+			if rainbowColorInversion then
+				col = hsvToHex((i / #text - t / 10 + 0.5) % 1, 0.5, 1)
+			else
+				col = hsvToHex((i / #text - t / 10) % 1, 0.5, 1)
+			end
+		else
+			if rainbowColorInversion then
+				col = hsvToHex((i / #text + 0.5) % 1, 0.5, 1)
 			else
 				col = hsvToHex(i / #text, 0.5, 1)
 			end
-			table.insert(nameText, {
-				text = myText,
-				color = col
-			})
 		end
-		return nameText
-	else
-		return { {
-			text = text,
-			color = defaultCol
-		} }
+		table.insert(nameText, {
+			text = myText,
+			color = col
+		})
 	end
+	return nameText
 end
 
 local function JsonMerge(Json1, Json2)
@@ -81,8 +83,27 @@ local function JsonMerge(Json1, Json2)
 	return output
 end
 
+local function jsonText(json)
+	if type(json) == "string" then
+		return json
+	else
+		local out = ""
+		for _, v in ipairs(json) do
+			out = out .. (v.text or "")
+		end
+		return out
+	end
+end
+
 function events.tick()
-	name = { text = player:getName(), color = "#667534" }
+	if textname == nil or textname == "" then
+		textname = player:getName()
+	end
+	name = { text = textname, color = "#667534" }
+	-- rainbow --
+	if getnum("actionToggles", "namerainbow") then
+		name = rainbowName(textname, false, getnum("actionToggles", "namerainbowmove"))
+	end
 	-- afk --
 	if getnum("actionToggles", "afk") then
 		at = at + 1
@@ -92,4 +113,5 @@ function events.tick()
 	end
 	-- set --
 	np.setname(name)
+	t = t + 1
 end
