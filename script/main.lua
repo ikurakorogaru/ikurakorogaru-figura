@@ -1,7 +1,6 @@
 local t = 0
 local ht = 0
 local nextBlink = 0
-local name = ""
 local lastNameJson = nil
 local Managers = {}
 -- imports --
@@ -136,9 +135,6 @@ local function setname(text)
 	end
 end
 
-function pings.changeName(iname)
-	name = iname
-end
 
 function events.tick()
 	-- afk --

@@ -10,6 +10,16 @@ function events.chat_send_message(msg)
 		for word in msg:gmatch("%S+") do
 			table.insert(args, word)
 		end
+		-- help --
+		if args[1] == "help" then
+			print("commands:")
+			print("name: §9[§bset§9 | §breset§9]§r")
+			print(">set §9[§bspeed§9]§r")
+			print("skull: §9[§bspeed§9] §9[§bset§9 | §breset§9]§r")
+			print(">set §9[§bspeed§9]§r")
+			print("color: §9[§bset§9 | §breset§9 | §bnow§9]§r")
+			print(">set §9[§br§9] [§bg§9] [§bb§9]§r")
+		end
 		-- name --
 		if args[1] == "name" then
 			if args[2] == "set" then
