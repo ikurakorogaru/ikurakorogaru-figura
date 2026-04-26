@@ -1,8 +1,4 @@
-function pings.changeSkullSpeed(n)
-	if type(n) == "number" then
-		skullSpeed = n
-	end
-end
+
 
 
 

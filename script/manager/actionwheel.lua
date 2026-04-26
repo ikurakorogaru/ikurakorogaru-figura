@@ -1,4 +1,4 @@
-local actionwheelmanager = require("../library/actionwheel")
+local actionwheelmanager = require("./imports").actionwheel
 local aw = {}
 aw.newToggleAction = actionwheelmanager.newToggleAction
 aw.setActionColor = actionwheelmanager.setActionColor

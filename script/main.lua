@@ -6,9 +6,7 @@ local name = ""
 local lastNameJson = nil
 local Managers = {}
 -- imports --
-Managers.patpat = require("./library/patpat")
-Managers.eyesequence = require("./library/eyesequence")
-Managers.actionwheel = require("./library/actionwheel")
+Managers = require("./manager/imports")
 
 
 -- patpat --
@@ -128,7 +126,6 @@ function pings.rwink()
 	})
 end
 
-
 -- ai --
 
 -- HSV to HEX --
@@ -217,11 +214,6 @@ end
 function pings.changeName(iname)
 	name = iname
 end
-
-
-
-
-
 
 function events.tick()
 	-- afk --
