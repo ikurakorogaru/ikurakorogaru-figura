@@ -29,11 +29,11 @@ function np.setname(t, plateType)
 	if t ~= nil then
 		if plateType == nil then
 			for k, v in pairs(nums.nowname) do
-				nameplate[k]:setText(t)
+				nameplate[k]:setText(toJson(t))
 				nums.nowname[k] = t
 			end
 		else
-			nameplate[plateType]:setText(t)
+			nameplate[plateType]:setText(toJson(t))
 			nums.nowname[plateType] = t
 		end
 	end
@@ -51,7 +51,7 @@ function np.addname(t, plateType, pos)
 					newName = v .. t
 				end
 
-				nameplate[k]:setText(newName)
+				nameplate[k]:setText(toJson(newName))
 				nums.nowname[k] = newName
 			end
 		else
@@ -64,7 +64,7 @@ function np.addname(t, plateType, pos)
 				newName = v .. t
 			end
 
-			nameplate[plateType]:setText(newName)
+			nameplate[plateType]:setText(toJson(newName))
 			nums.nowname[plateType] = newName
 		end
 	end
@@ -81,3 +81,5 @@ function np.nowname(plateType)
 		return nums.nowname
 	end
 end
+
+return np
