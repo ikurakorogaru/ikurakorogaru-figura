@@ -126,6 +126,6 @@ function events.tick()
 		at = 0
 	end
 	-- set --
-	np.setname(name..accessory)
+	np.setname(JsonMerge({ name }, { { text = accessory, color = "#FFFFFF" } }))
 	t = t + 1
 end
