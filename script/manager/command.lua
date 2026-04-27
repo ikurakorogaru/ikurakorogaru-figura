@@ -16,10 +16,10 @@ function events.chat_send_message(msg)
 		end
 		if args[1] == "accessory" then
 			if args[2] == "set" then
-				pings.changeAccessory(args[3])
+				pings.setAccessory(args[3])
 			end
 			if args[2] == "reset" then
-				pings.changeAccessory("")
+				pings.setAccessory("")
 			end
 		end
 		-- skull --
