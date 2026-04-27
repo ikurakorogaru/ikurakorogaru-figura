@@ -9,9 +9,14 @@ local at = 0
 local name = {}
 local textname = ""
 local nameCol = "#667534"
+local accessory = ""
 
 function pings.changeNameCol(r, g, b)
 	nameCol = rgbToHex(r / 255, g / 255, b / 255)
+end
+
+function pings.setAccessory(a)
+	accessory = a
 end
 
 function pings.changeName(iname)
@@ -121,6 +126,6 @@ function events.tick()
 		at = 0
 	end
 	-- set --
-	np.setname(name)
+	np.setname(name..accessory)
 	t = t + 1
 end

@@ -14,6 +14,14 @@ function events.chat_send_message(msg)
 				pings.changeName("")
 			end
 		end
+		if args[1] == "accessory" then
+			if args[2] == "set" then
+				pings.changeAccessory(args[3])
+			end
+			if args[2] == "reset" then
+				pings.changeAccessory("")
+			end
+		end
 		-- skull --
 		if args[1] == "skull" then
 			if args[2] == "speed" then

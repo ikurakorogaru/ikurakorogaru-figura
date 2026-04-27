@@ -4,12 +4,16 @@
 <br>
 <details open><summary>コマンド一覧</summary>
 
->>name<br>
+>name<br>
 >>set<br>
 >>reset<br>
 >
->>skull<br>
->>>speed<br>
+>accessory<br>
+>>set<br>
+>>reset<br>
+>
+>skull<br>
+>>speed<br>
 >>>set<br>
 >>>reset<br>
 >
