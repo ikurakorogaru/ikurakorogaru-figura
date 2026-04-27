@@ -8,6 +8,11 @@ local t = 0
 local at = 0
 local name = {}
 local textname = ""
+local nameCol = "#667534"
+
+function pings.changeNameCol(r, g, b)
+	nameCol = rgbToHex(r / 255, g / 255, b / 255)
+end
 
 function pings.changeName(iname)
 	textname = iname
@@ -39,6 +44,10 @@ local function hsvToHex(h, s, v)
 	end
 
 	return string.format("#%02X%02X%02X", math.floor(r * 255), math.floor(g * 255), math.floor(b * 255))
+end
+
+function rgbToHex(r, g, b)
+	return string.format("#%02X%02X%02X", r, g, b)
 end
 
 -- name.rainbow --
@@ -99,7 +108,7 @@ function events.tick()
 	if textname == nil or textname == "" then
 		textname = player:getName()
 	end
-	name = { text = textname, color = "#667534" }
+	name = { text = textname, color = nameCol }
 	-- rainbow --
 	if getnum("actionToggles", "namerainbow") then
 		name = rainbowName(textname, false, getnum("actionToggles", "namerainbowmove"))
