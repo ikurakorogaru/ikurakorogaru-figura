@@ -50,6 +50,10 @@ function es.blinkSequence(t)
 	end
 end
 
+function es.delall()
+	es.setnum("blinkSequences", nil, {})
+end
+
 function events.tick()
 	es.blinkSequence(t)
 	t = t + 1

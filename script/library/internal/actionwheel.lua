@@ -168,4 +168,14 @@ function aw.openPage(name)
 	action_wheel:setPage(page)
 end
 
+function aw.delall()
+	aw.setnum("pages", nil, {})
+	aw.setnum("paths", nil, {"root"})
+	aw.setnum("actionToggles", nil, {})
+	aw.setnum("actionNums", nil, {})
+	aw.setnum("actions", nil, {})
+	aw.setnum("backActions", nil, {})
+	aw.setnum("nowName", nil, nil)
+end
+
 return aw

@@ -1,15 +1,16 @@
-local actionwheelmanager = require("./imports").actionwheel
+local manager = require("./imports")
 local aw = {}
-aw.newToggleAction = actionwheelmanager.newToggleAction
-aw.setActionColor = actionwheelmanager.setActionColor
-aw.newActionPage = actionwheelmanager.newActionPage
-aw.newNumAction = actionwheelmanager.newNumAction
-aw.newAction = actionwheelmanager.newAction
-aw.getnum = actionwheelmanager.getnum
-aw.setnum = actionwheelmanager.setnum
-aw.openPage = actionwheelmanager.openPage
-
-
+local es = {}
+aw.newToggleAction = manager.actionwheel.newToggleAction
+aw.setActionColor = manager.actionwheel.setActionColor
+aw.newActionPage = manager.actionwheel.newActionPage
+aw.newNumAction = manager.actionwheel.newNumAction
+aw.newAction = manager.actionwheel.newAction
+aw.getnum = manager.actionwheel.getnum
+aw.setnum = manager.actionwheel.setnum
+aw.openPage = manager.actionwheel.openPage
+aw.delall = manager.actionwheel.delall
+es.delall = manager.eyesequence.delall
 
 local function reloadActions(openpage)
 	aw.setnum("actions", nil, {})
@@ -46,6 +47,7 @@ local function reloadActions(openpage)
 	aw.newAction(pages.other, "effect", "effect", "minecraft:oak_button", pings.effect, nil, 255, 245, 169, true)
 	aw.newAction(pages.other, "armorvisible", "armorvisible", "minecraft:oak_button", pings.avisible, pings.aunvisible,
 		255, 245, 169, true)
+	aw.newAction(pages.other, "reload", "reload", "minecraft:barrier", pings.reLoad, nil, 255, 0, 0, true)
 	--test
 	aw.newActionPage(pages.root, "test", "tests", "minecraft:command_block", 0, 0, 0, true)
 	aw.newActionPage(pages.test, "test_test", "tests", "minecraft:command_block", 0, 0, 0, true)
@@ -58,6 +60,14 @@ end
 
 
 ------------------------------------------------------------------- functions -------------------------------------------------------------------
+
+function pings.reLoad()
+	aw.delall()
+	reloadActions(nil)
+	pings.setAccessory("")
+	pings.changeName(player:getName())
+	es.delall()
+end
 
 function pings.animation_1()
 	animations.model.test1:play()
