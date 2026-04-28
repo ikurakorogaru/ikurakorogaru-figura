@@ -11,6 +11,7 @@ aw.setnum = manager.actionwheel.setnum
 aw.openPage = manager.actionwheel.openPage
 aw.delall = manager.actionwheel.delall
 es.delall = manager.eyesequence.delall
+local funs = {}
 
 local function reloadActions(openpage)
 	aw.setnum("actions", nil, {})
@@ -48,9 +49,9 @@ local function reloadActions(openpage)
 	aw.newAction(pages.other, "armorvisible", "armorvisible", "minecraft:oak_button", pings.avisible, pings.aunvisible,
 		255, 245, 169, true)
 	aw.newAction(pages.other, "reload", "reload", "minecraft:barrier", pings.reLoad, nil, 255, 0, 0, true)
-	--test
-	aw.newActionPage(pages.root, "test", "tests", "minecraft:command_block", 0, 0, 0, true)
-	aw.newActionPage(pages.test, "test_test", "tests", "minecraft:command_block", 0, 0, 0, true)
+	--debug
+	aw.newActionPage(pages.root, "debug", "debug", "minecraft:command_block", 0, 0, 0, true)
+	aw.newAction(pages.debug, "memorys", "memorys", "minecraft:green_stained_glass", funs.memorys, nil, 255, 0, 255, true)
 	if openpage ~= nil then
 		aw.openPage(openpage)
 	else
@@ -67,6 +68,21 @@ function pings.reLoad()
 	pings.setAccessory("")
 	pings.changeName(player:getName())
 	es.delall()
+end
+
+function funs.memorys()
+	print("----- memory dump -----")
+	print("paths: " .. table.concat(aw.getnum("paths"), "/"))
+
+	print("toggles:")
+	for k, v in pairs(aw.getnum("actionToggles")) do
+		print("  " .. k .. " = " .. tostring(v))
+	end
+
+	print("numbers:")
+	for k, v in pairs(aw.getnum("actionNums")) do
+		print("  " .. k .. " = " .. tostring(v))
+	end
 end
 
 function pings.animation_1()
