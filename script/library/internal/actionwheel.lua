@@ -32,7 +32,7 @@ function aw.setnum(g, k, v)
 end
 
 function aw.newToggleAction(topage, to, name, item, default, r, g, b, lighten)
-	local open = action_wheel:newAction()
+	local open = topage:newAction()
 	open:setTitle(name)
 	if aw.getnum("actionToggles", to) == nil then
 		aw.setnum("actionToggles", to, (default or false))
@@ -45,16 +45,17 @@ function aw.newToggleAction(topage, to, name, item, default, r, g, b, lighten)
 
 	open:setItem(item)
 	aw.setActionColor(open, r, g, b, lighten)
-	topage:setAction(-1, open)
 	aw.setnum("actions", to, open)
 end
 
 function aw.setActionColor(action, r, g, b, lighten)
+	r = r or 255
+	g = g or 255
+	b = b or 255
+
 	local nr = r / 255
 	local ng = g / 255
 	local nb = b / 255
-
-	action:setColor(nr, ng, nb)
 
 	local delta = 0.255
 	local op = lighten and math.min or math.max
@@ -65,8 +66,11 @@ function aw.setActionColor(action, r, g, b, lighten)
 	local hg = op(ng + adjust, base)
 	local hb = op(nb + adjust, base)
 
+	action:setColor(nr, ng, nb)
 	action:setHoverColor(hr, hg, hb)
 	action:setToggleColor(hr, hg, hb)
+	print("color:", r, g, b, "lighten:", lighten)
+	print("normalized:", nr, ng, nb)
 end
 
 function aw.newActionPage(topage, id, name, item, r, g, b, lighten)
@@ -96,7 +100,7 @@ function aw.newActionPage(topage, id, name, item, r, g, b, lighten)
 end
 
 function aw.newNumAction(topage, to, name, item, default, r, g, b, lighten)
-	local open = action_wheel:newAction()
+	local open = topage:newAction()
 
 	if aw.getnum("actionNums", to) == nil then
 		aw.setnum("actionNums", to, default)
@@ -124,12 +128,11 @@ function aw.newNumAction(topage, to, name, item, default, r, g, b, lighten)
 
 	open:setItem(item)
 	aw.setActionColor(open, r, g, b, lighten)
-	topage:setAction(-1, open)
 	aw.setnum("actions", to, open)
 end
 
 function aw.newAction(topage, to, name, item, Lfun, Rfun, r, g, b, lighten)
-	local open = action_wheel:newAction()
+	local open = topage:newAction()
 	open:setTitle(name)
 	if Lfun ~= nil then
 		open:setOnLeftClick(Lfun)
@@ -139,7 +142,6 @@ function aw.newAction(topage, to, name, item, Lfun, Rfun, r, g, b, lighten)
 	end
 	open:setItem(item)
 	aw.setActionColor(open, r, g, b, lighten)
-	topage:setAction(-1, open)
 	aw.setnum("actions", to, open)
 end
 
@@ -170,7 +172,7 @@ end
 
 function aw.delall()
 	aw.setnum("pages", nil, {})
-	aw.setnum("paths", nil, {"root"})
+	aw.setnum("paths", nil, { "root" })
 	aw.setnum("actionToggles", nil, {})
 	aw.setnum("actionNums", nil, {})
 	aw.setnum("actions", nil, {})
