@@ -69,8 +69,6 @@ function aw.setActionColor(action, r, g, b, lighten)
 	action:setColor(nr, ng, nb)
 	action:setHoverColor(hr, hg, hb)
 	action:setToggleColor(hr, hg, hb)
-	print("color:", r, g, b, "lighten:", lighten)
-	print("normalized:", nr, ng, nb)
 end
 
 function aw.newActionPage(topage, id, name, item, r, g, b, lighten)
