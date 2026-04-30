@@ -1,9 +1,10 @@
 local manager = require("./imports")
-local getnum = manager.actionwheel.getnum
+local aw = {}
+aw.getnum = manager.l.actionwheel.getnum
 local np = {}
-np.setname = manager.nameplate.setname
-np.addname = manager.nameplate.addname
-np.nowname = manager.nameplate.nowname
+np.setname = manager.l.nameplate.setname
+np.addname = manager.l.nameplate.addname
+np.nowname = manager.l.nameplate.nowname
 local t = 0
 local at = 0
 local name = {}
@@ -115,11 +116,11 @@ function events.tick()
 	end
 	name = { text = textname, color = nameCol }
 	-- rainbow --
-	if getnum("actionToggles", "namerainbow") then
-		name = rainbowName(textname, false, getnum("actionToggles", "namerainbowmove"))
+	if aw.getnum("actionToggles", "namerainbow") then
+		name = rainbowName(textname, false, aw.getnum("actionToggles", "namerainbowmove"))
 	end
 	-- afk --
-	if getnum("actionToggles", "afk") then
+	if aw.getnum("actionToggles", "afk") then
 		at = at + 1
 		name = JsonMerge({ name }, { { text = "[AFK:" .. math.floor(at / 20) .. "]", color = "#FF0000" } })
 	else

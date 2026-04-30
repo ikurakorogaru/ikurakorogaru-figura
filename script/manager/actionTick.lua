@@ -1,8 +1,8 @@
 local manager = require("script.manager.imports")
 local aw = {}
-aw.getnum = manager.actionwheel.getnum
+aw.getnum = manager.l.actionwheel.getnum
 local es = {}
-es.newSequence = manager.eyesequence.newSequence
+es.newSequence = manager.l.eyesequence.newSequence
 -- -- -- -- --
 local t = 0
 local ht = 0

@@ -1,16 +1,16 @@
 local manager = require("./imports")
 local aw = {}
 local es = {}
-aw.newToggleAction = manager.actionwheel.newToggleAction
-aw.setActionColor = manager.actionwheel.setActionColor
-aw.newActionPage = manager.actionwheel.newActionPage
-aw.newNumAction = manager.actionwheel.newNumAction
-aw.newAction = manager.actionwheel.newAction
-aw.getnum = manager.actionwheel.getnum
-aw.setnum = manager.actionwheel.setnum
-aw.openPage = manager.actionwheel.openPage
-aw.delall = manager.actionwheel.delall
-es.delall = manager.eyesequence.delall
+aw.newToggleAction = manager.l.actionwheel.newToggleAction
+aw.setActionColor = manager.l.actionwheel.setActionColor
+aw.newActionPage = manager.l.actionwheel.newActionPage
+aw.newNumAction = manager.l.actionwheel.newNumAction
+aw.newAction = manager.l.actionwheel.newAction
+aw.getnum = manager.l.actionwheel.getnum
+aw.setnum = manager.l.actionwheel.setnum
+aw.openPage = manager.l.actionwheel.openPage
+aw.delall = manager.l.actionwheel.delall
+es.delall = manager.l.eyesequence.delall
 local funs = {}
 
 local function reloadActions(openpage)
