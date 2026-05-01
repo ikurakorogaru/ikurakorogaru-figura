@@ -1,5 +1,5 @@
 local manager = require("./imports")
-local aw = manager.actionwheel
+local aw = manager.l.actionwheel
 function pings.changeToggles(name, Bool)
 	aw.setnum("actionToggles", name, Bool)
 

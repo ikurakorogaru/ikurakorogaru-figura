@@ -4,6 +4,7 @@ managers.l = {
 	["nameplate"] = require("script.library.internal.nameplate"),
 	["actionwheel"] = require("script.library.internal.actionwheel"),
 	["patpat"] = require("script.library.external.patpat"),
+	["ping"] = require("script.library.internal.ping")
 }
 managers.m = {
 }
