@@ -85,6 +85,8 @@ function events.tick()
 		else
 			nextBlink = nextBlink - 1
 		end
+	else
+		nextBlink = 0
 	end
 	-- toggles --
 	-- head

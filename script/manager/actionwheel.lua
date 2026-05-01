@@ -109,8 +109,8 @@ function pings.aunvisible()
 end
 
 function pings.speedReset()
-	aw.setnum("actionNums", "headSpeedChange", 1)
-	reloadActions("head")
+	aw.setnum("actionNums", "headSpeedChange", 1, true)
+	reloadActions("rotate")
 end
 
 ------------------------------------------------------------------- \functions -------------------------------------------------------------------
