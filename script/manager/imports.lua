@@ -1,6 +1,6 @@
 local managers = {}
 managers.l = {
-	["ping"] = require("script.ping"),
+	["ping"] = require("script.library.internal.ping"),
 	["eyesequence"] = require("script.library.internal.eyesequence"),
 	["nameplate"] = require("script.library.internal.nameplate"),
 	["actionwheel"] = require("script.library.internal.actionwheel"),

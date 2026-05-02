@@ -7,7 +7,7 @@ nums.actionNums = {}
 nums.nowName = nil
 nums.actions = {}
 nums.backActions = {}
-local ping = require("script.ping")
+local ping = require("script.library.internal.ping")
 local setpingnum = ping.setnum
 
 ping.on("aw.", function(name, value)
