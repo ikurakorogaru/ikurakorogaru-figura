@@ -1,3 +1,5 @@
-vanilla_model.ARMOR:setVisible(false)
-vanilla_model.PLAYER:setVisible(false)
-vanilla_model.CAPE:setVisible(false)
+local tryto, msg = pcall(require, "script.manager.managers")
+if not tryto then
+    print("§cERROR DOWN :")
+    print(msg)
+end

@@ -1,9 +1,8 @@
 {
   "name": "ikurakorogaru",
   "description": "ｲｸﾗｺﾛｶﾞﾙ",
-  "authors": [
-    "ikurakorogaru",
-		"tarakotodomaru"
-  ],
-  "color": "#667534"
+  "authors": ["ikurakorogaru", "tarakotodomaru"],
+  "color": "#667534",
+  "version": "3.0",
+  "autoScripts": ["script.main"]
 }

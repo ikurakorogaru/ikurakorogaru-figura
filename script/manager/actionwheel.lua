@@ -25,7 +25,7 @@ local function reloadActions(openpage)
     aw.newToggleAction(pages.rotate, "head", "headToggle", "minecraft:lever", true, 255, 245, 169, true)
     aw.newNumAction(pages.rotate, "headSpeedChange", "headSpeedChange", "minecraft:lever", 1, 255, 245, 169,
         true)
-    aw.newAction(pages.rotate, "headSpeedReset", "headSpeedReset", "minecraft:barrier", pings.speedReset,
+    aw.newAction(pages.rotate, "headSpeedReset", "headSpeedReset", "minecraft:barrier", pings.headSpeedReset,
         nil,
         255, 245, 169, true)
     aw.newToggleAction(pages.rotate, "headSpeed", "headSpeedToggle", "minecraft:lever", true, 255, 245, 169, true)
@@ -34,6 +34,9 @@ local function reloadActions(openpage)
     aw.newAction(pages.eye, "blink", "blink", "minecraft:oak_button", pings.blink, nil, 255, 245, 169, true)
     aw.newAction(pages.eye, "wink", "wink", "minecraft:oak_button", pings.lwink, pings.rwink, 255, 245, 169, true)
     aw.newToggleAction(pages.eye, "autoBlink", "autoBlinkToggle", "minecraft:lever", true, 255, 245, 169, true)
+    -- skull
+    aw.newActionPage(pages.root, "skull", "skulls", "minecraft:observer", 255, 245, 169, true)
+
     --name
     aw.newActionPage(pages.root, "name", "names", "minecraft:name_tag", 33, 33, 33, true)
     aw.newToggleAction(pages.name, "namerainbow", "nametagToggle", "minecraft:lever", false, 255, 245, 169, true)
@@ -60,7 +63,6 @@ local function reloadActions(openpage)
         aw.openPage("root")
     end
 end
-
 
 ------------------------------------------------------------------- functions -------------------------------------------------------------------
 
@@ -110,7 +112,7 @@ function pings.aunvisible()
     vanilla_model.ARMOR:setVisible(false)
 end
 
-function pings.speedReset()
+function pings.headSpeedReset()
     aw.setnum("actionNums", "headSpeedChange", 1, true)
     reloadActions("rotate")
 end

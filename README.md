@@ -12,10 +12,5 @@
 >>set<br>
 >>reset<br>
 >
->skull<br>
->>speed<br>
->>>set<br>
->>>reset<br>
->
 
 </details>
