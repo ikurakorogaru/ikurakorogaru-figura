@@ -48,10 +48,11 @@ local function reloadActions(openpage)
 	aw.newAction(pages.other, "effect", "effect", "minecraft:oak_button", pings.effect, nil, 255, 245, 169, true)
 	aw.newAction(pages.other, "armorvisible", "armorvisible", "minecraft:oak_button", pings.avisible, pings.aunvisible,
 		255, 245, 169, true)
-	aw.newAction(pages.other, "reload", "reload", "minecraft:barrier", pings.reLoad, nil, 255, 0, 0, true)
 	--debug
 	aw.newActionPage(pages.root, "debug", "debug", "minecraft:command_block", 0, 0, 0, true)
 	aw.newAction(pages.debug, "memorys", "memorys", "minecraft:green_stained_glass", funs.memorys, nil, 255, 0, 255, true)
+	aw.newAction(pages.debug, "reload", "reload", "minecraft:barrier", pings.reLoad, nil, 255, 0, 0, true)
+	-- end setup	
 	if openpage ~= nil then
 		aw.openPage(openpage)
 	else
