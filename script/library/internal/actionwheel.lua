@@ -14,7 +14,7 @@ ping.on("aw.", function(name, value)
     local g, k = name:match("^aw%.([^%.]+)%.(.+)$")
     if not g then return end
 
-    aw.setnum(g, k, value, false)
+    aw.setnum(g, k, value, nil)
 
     if g == "actionToggles" then
         local action = aw.getnum("actions", k)
@@ -46,10 +46,10 @@ function aw.setnum(g, k, v, p)
 
     if k ~= nil then
         nums[g][k] = v
-        if p then setpingnum("aw." .. g .. "." .. k, v, false) end
+        if p ~= nil then setpingnum("aw." .. g .. "." .. k, v, p) end
     else
         nums[g] = v
-        if p then setpingnum("aw." .. g, v, false) end
+        if p ~= nil then setpingnum("aw." .. g, v, p) end
     end
 end
 
@@ -58,7 +58,7 @@ function aw.newToggleAction(topage, to, name, item, default, r, g, b, lighten)
     open:setTitle(name)
 
     if aw.getnum("actionToggles", to) == nil then
-        aw.setnum("actionToggles", to, (default or false), false)
+        aw.setnum("actionToggles", to, (default or false), nil)
     end
 
     open:setToggled(aw.getnum("actionToggles", to))
@@ -71,7 +71,7 @@ function aw.newToggleAction(topage, to, name, item, default, r, g, b, lighten)
 
     open:setItem(item)
     aw.setActionColor(open, r, g, b, lighten)
-    aw.setnum("actions", to, open, false)
+    aw.setnum("actions", to, open, nil)
 end
 
 function aw.setActionColor(action, r, g, b, lighten)
@@ -102,7 +102,7 @@ function aw.newActionPage(topage, id, name, item, r, g, b, lighten)
     local subpage = action_wheel:newPage()
     local backb = subpage:newAction()
     local open = topage:newAction()
-    aw.setnum("backActions", id, backb, false)
+    aw.setnum("backActions", id, backb, nil)
 
     open:setTitle(name)
     open:setOnLeftClick(function()
@@ -126,7 +126,7 @@ function aw.newActionPage(topage, id, name, item, r, g, b, lighten)
     end)
     backb:setItem("minecraft:arrow")
 
-    aw.setnum("pages", id, subpage, false)
+    aw.setnum("pages", id, subpage, nil)
     return subpage
 end
 
@@ -134,7 +134,8 @@ function aw.newNumAction(topage, to, name, item, default, r, g, b, lighten)
     local open = topage:newAction()
 
     if aw.getnum("actionNums", to) == nil then
-        aw.setnum("actionNums", to, default, false)
+        aw.setnum("actionNums", to, default, nil)
+        ping.setdefault("aw.actionNums." .. to, default)
     end
 
     local function updateTitle()
@@ -157,7 +158,7 @@ function aw.newNumAction(topage, to, name, item, default, r, g, b, lighten)
 
     open:setItem(item)
     aw.setActionColor(open, r, g, b, lighten)
-    aw.setnum("actions", to, open, false)
+    aw.setnum("actions", to, open, nil)
 end
 
 function aw.newAction(topage, to, name, item, Lfun, Rfun, r, g, b, lighten)
@@ -173,7 +174,7 @@ function aw.newAction(topage, to, name, item, Lfun, Rfun, r, g, b, lighten)
 
     open:setItem(item)
     aw.setActionColor(open, r, g, b, lighten)
-    aw.setnum("actions", to, open, false)
+    aw.setnum("actions", to, open, nil)
 end
 
 function aw.openPage(name)
@@ -202,13 +203,13 @@ function aw.openPage(name)
 end
 
 function aw.delall()
-    aw.setnum("pages", nil, {}, false)
-    aw.setnum("paths", nil, { "root" }, false)
-    aw.setnum("actionToggles", nil, {}, false)
-    aw.setnum("actionNums", nil, {}, false)
-    aw.setnum("actions", nil, {}, false)
-    aw.setnum("backActions", nil, {}, false)
-    aw.setnum("nowName", nil, nil, false)
+    aw.setnum("pages", nil, {}, nil)
+    aw.setnum("paths", nil, { "root" }, nil)
+    aw.setnum("actionToggles", nil, {}, nil)
+    aw.setnum("actionNums", nil, {}, nil)
+    aw.setnum("actions", nil, {}, nil)
+    aw.setnum("backActions", nil, {}, nil)
+    aw.setnum("nowName", nil, nil, nil)
 end
 
 return aw

@@ -3,6 +3,8 @@ local aw = {}
 aw.getnum = manager.l.actionwheel.getnum
 local es = {}
 es.newSequence = manager.l.eyesequence.newSequence
+local tm = {}
+tm.setScheduler = manager.l.tickmanager.setScheduler
 -- -- -- -- --
 local t = 0
 local ht = 0
@@ -76,8 +78,12 @@ end
 ---------------------------------------------------------------
 local headParts = { models.model.root.Head.Head1, models.model.root.Head.Head2, models.model.root.Head.Head3,
     models.model.root.Head.Head4, models.model.root.Head.eye_up, models.model.root.Head.eye_down }
-
-function events.tick()
+tm.setScheduler("actionTick", function()
+    local manager = require("script.manager.imports")
+    local aw = {}
+    aw.getnum = manager.l.actionwheel.getnum
+    local es = {}
+    es.newSequence = manager.l.eyesequence.newSequence
     -- autoBlink --
     if aw.getnum("actionToggles", "autoBlink") then
         if nextBlink == 0 then
@@ -106,4 +112,4 @@ function events.tick()
     end
     -- others --
     t = t + 1
-end
+end)

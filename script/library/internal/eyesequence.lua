@@ -54,9 +54,9 @@ function es.delall()
     es.setnum("blinkSequences", nil, {})
 end
 
-function events.tick()
+require("script.library.internal.tickmanager").setScheduler("library-eyesequence", function()
     es.blinkSequence(t)
     t = t + 1
-end
+end)
 
 return es

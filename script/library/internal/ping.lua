@@ -3,19 +3,46 @@ local nums = {}
 local update_pending = {}
 local update_order = {}
 local handlers = {}
+local defaults = {}
+local full_sync_interval = 600
 local t = 0
 local send_limit = 16
-local full_sync_interval = 600
 local full_sync_index = 1
 
+local last_second = -1
+local sent_this_second = 0
+
+function p.setdefault(name, num)
+    if defaults[name] == nil then
+        defaults[name] = num
+    end
+    nums[name] = num
+end
+
 function p.setnum(name, num, update_type)
+    if num == nil then
+        nums[name] = nil
+        defaults[name] = nil
+        update_pending[name] = nil
+        return
+    end
+    if num == nil then
+        nums[name] = nil
+        update_pending[name] = nil
+        return
+    end
+
+    if nums[name] == num then
+        return
+    end
+
     nums[name] = num
 
     if update_type then
         pings.innums(name, num)
     else
         if update_pending[name] == nil then
-            table.insert(update_order, name)
+            update_order[#update_order + 1] = name
         end
 
         update_pending[name] = num
@@ -40,7 +67,7 @@ function pings.innums(name, num)
     end
 end
 
-function events.tick()
+require("script.library.internal.tickmanager").setScheduler("library-ping", function()
     local current_second = math.floor(t / 20)
 
     if current_second ~= last_second then
@@ -48,33 +75,29 @@ function events.tick()
         last_second = current_second
     end
 
-    local sent = 0
+    while #update_order > 0 and sent_this_second < send_limit do
+        local name = table.remove(update_order, 1)
+        local num = update_pending[name]
 
-    -- 通常更新
-    if t % 1 == 0 then
-        while #update_order > 0 and sent_this_second < 16 do
-            local name = table.remove(update_order, 1)
-            local num = update_pending[name]
-
-            if num ~= nil then
-                pings.innums(name, num)
-                update_pending[name] = nil
-                sent_this_second = sent_this_second + 1
-            end
+        if num ~= nil then
+            pings.innums(name, num)
+            update_pending[name] = nil
+            sent_this_second = sent_this_second + 1
         end
     end
 
-    -- full sync（余った枠だけ使う）
-    if sent_this_second < 16 then
+    if t % full_sync_interval == 0 and sent_this_second < send_limit then
         local keys = {}
 
-        for name, _ in pairs(nums) do
-            table.insert(keys, name)
+        for name, value in pairs(nums) do
+            if value ~= nil and value ~= defaults[name] then
+                keys[#keys + 1] = name
+            end
         end
 
         table.sort(keys)
 
-        while full_sync_index <= #keys and sent_this_second < 16 do
+        while full_sync_index <= #keys and sent_this_second < send_limit do
             local name = keys[full_sync_index]
             pings.innums(name, nums[name])
 
@@ -88,6 +111,6 @@ function events.tick()
     end
 
     t = t + 1
-end
+end)
 
 return p
