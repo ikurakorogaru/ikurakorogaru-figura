@@ -80,12 +80,10 @@ local headParts = { models.model.root.Head.Head1, models.model.root.Head.Head2, 
     models.model.root.Head.Head4, models.model.root.Head.eye_up, models.model.root.Head.eye_down }
 tm.setScheduler("actionTick", function()
     local manager = require("script.manager.imports")
-    local aw = {}
-    aw.getnum = manager.l.actionwheel.getnum
-    local es = {}
-    es.newSequence = manager.l.eyesequence.newSequence
+    local aw = manager.l.actionwheel
+
     -- autoBlink --
-    if aw.getnum("actionToggles", "autoBlink") then
+    if aw.getToggleById("root_head_eye", "autoBlink") and host:isHost() then
         if nextBlink == 0 then
             pings.blink()
             nextBlink = math.random(80, 160)
@@ -95,12 +93,15 @@ tm.setScheduler("actionTick", function()
     else
         nextBlink = 0
     end
+
     -- toggles --
     -- head
-    if aw.getnum("actionToggles", "head") then
-        ht = ht + aw.getnum("actionNums", "headSpeedChange")
+    if aw.getToggleById("root_head_rotate", "head") then
+        local headSpeedChange = aw.getNumById("root_head_rotate", "headSpeedChange") or 1
+        ht = ht + headSpeedChange
+
         -- headSpeed
-        if aw.getnum("actionToggles", "headSpeed") then
+        if aw.getToggleById("root_head_rotate", "headSpeed") then
             local v = player:getVelocity()
             ht = ht + (math.abs(v.x * 2) + math.abs(v.z * 2))
         end
@@ -110,6 +111,7 @@ tm.setScheduler("actionTick", function()
     for i, part in ipairs(headParts) do
         part:setOffsetRot(0, ht * (i % 2 * 2 - 1), 0)
     end
+
     -- others --
     t = t + 1
 end)

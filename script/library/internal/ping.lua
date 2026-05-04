@@ -8,7 +8,8 @@ local full_sync_interval = 600
 local t = 0
 local send_limit = 16
 local full_sync_index = 1
-
+local full_sync_keys = {}
+local full_sync_running = false
 local last_second = -1
 local sent_this_second = 0
 
@@ -16,18 +17,16 @@ function p.setdefault(name, num)
     if defaults[name] == nil then
         defaults[name] = num
     end
-    nums[name] = num
+
+    if nums[name] == nil then
+        nums[name] = num
+    end
 end
 
 function p.setnum(name, num, update_type)
     if num == nil then
         nums[name] = nil
         defaults[name] = nil
-        update_pending[name] = nil
-        return
-    end
-    if num == nil then
-        nums[name] = nil
         update_pending[name] = nil
         return
     end
@@ -86,26 +85,34 @@ require("script.library.internal.tickmanager").setScheduler("library-ping", func
         end
     end
 
-    if t % full_sync_interval == 0 and sent_this_second < send_limit then
-        local keys = {}
+    if t % full_sync_interval == 0 then
+        full_sync_keys = {}
 
         for name, value in pairs(nums) do
             if value ~= nil and value ~= defaults[name] then
-                keys[#keys + 1] = name
+                full_sync_keys[#full_sync_keys + 1] = name
             end
         end
 
-        table.sort(keys)
+        table.sort(full_sync_keys)
+        full_sync_index = 1
+        full_sync_running = true
+    end
 
-        while full_sync_index <= #keys and sent_this_second < send_limit do
-            local name = keys[full_sync_index]
-            pings.innums(name, nums[name])
+    if full_sync_running and sent_this_second < send_limit then
+        while full_sync_index <= #full_sync_keys and sent_this_second < send_limit do
+            local name = full_sync_keys[full_sync_index]
+
+            if nums[name] ~= nil and nums[name] ~= defaults[name] then
+                pings.innums(name, nums[name])
+                sent_this_second = sent_this_second + 1
+            end
 
             full_sync_index = full_sync_index + 1
-            sent_this_second = sent_this_second + 1
         end
 
-        if full_sync_index > #keys then
+        if full_sync_index > #full_sync_keys then
+            full_sync_running = false
             full_sync_index = 1
         end
     end

@@ -1,6 +1,5 @@
 local manager = require("./imports")
-local aw = {}
-aw.getnum = manager.l.actionwheel.getnum
+local aw = manager.l.actionwheel
 local np = {}
 np.setname = manager.l.nameplate.setname
 np.addname = manager.l.nameplate.addname
@@ -118,11 +117,11 @@ tm.setScheduler("nameplate", function()
     end
     name = { text = textname, color = nameCol }
     -- rainbow --
-    if aw.getnum("actionToggles", "namerainbow") then
-        name = rainbowName(textname, false, aw.getnum("actionToggles", "namerainbowmove"))
+    if aw.getToggleById("root_name", "namerainbow") then
+        name = rainbowName(textname, false, aw.getToggleById("root_name", "namerainbowmove"))
     end
     -- afk --
-    if aw.getnum("actionToggles", "afk") then
+    if aw.getToggleById("root_name", "afk") then
         at = at + 1
         name = JsonMerge({ name }, { { text = "[AFK:" .. math.floor(at / 20) .. "]", color = "#FF0000" } })
     else
